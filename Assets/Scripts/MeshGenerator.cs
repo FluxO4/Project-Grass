@@ -6,22 +6,30 @@ using System.Collections;
 public class MeshGenerator : MonoBehaviour
 {
     Mesh mesh;
+    MeshCollider meshCollider;
 
     Vector3[] vertices; 
     int[] triangles;
+    public float xpos = 0;
+    public float zpos = 0;
     public int xSize = 20, zSize = 20;
     public float scale = 0.39f;
 
     void Start(){
+        xpos = transform.position.x;
+        zpos = transform.position.z;
+    }
+
+    public void Generate() {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        meshCollider = GetComponent<MeshCollider>();
         CreateShape();  //make this changeable form UI??
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-
+        meshCollider.sharedMesh = mesh;
     }
-
     private void Update(){
         //UpdateMesh();
     }
@@ -33,7 +41,7 @@ public class MeshGenerator : MonoBehaviour
         // creates vertices array of the given size 
         for(int i = 0, z = 0; z <= zSize; z++){
             for(int x = 0; x <= xSize; x++){
-                float y = Mathf.PerlinNoise(x*.3f,z*.3f) * 2f; 
+                float y = Mathf.PerlinNoise((x+xpos)*scale,(z + zpos)*scale) * 1.5f + Mathf.PerlinNoise((x + xpos) * scale *0.5f, (z + zpos) * scale*0.5f) * 4f; 
                 // float y = GenerateNoiseMap(x, z, scale);
                 vertices[i] = new Vector3(x, y, z);
                 i++;
