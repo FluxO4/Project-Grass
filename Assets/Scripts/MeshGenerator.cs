@@ -15,16 +15,19 @@ public class MeshGenerator : MonoBehaviour
     void Start(){
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        StartCoroutine(CreateShape());  //make this changeable form UI??
+        CreateShape();  //make this changeable form UI??
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
 
     }
 
     private void Update(){
-        UpdateMesh();
+        //UpdateMesh();
     }
 
     // void-return function made coroutine for the delay thingy 
-    IEnumerator CreateShape(){
+    void CreateShape(){
         vertices = new Vector3[(xSize+1)* (zSize+1)];
 
         // creates vertices array of the given size 
@@ -55,8 +58,8 @@ public class MeshGenerator : MonoBehaviour
 
             tris+=6;
 
-            //delay for placing the triangles
-            yield return new WaitForSeconds(.005f);
+                //delay for placing the triangles
+// yield return new WaitForSeconds(.005f);
             }
 
             m++;
@@ -66,12 +69,12 @@ public class MeshGenerator : MonoBehaviour
 
     // puts spheres on the coordinates
     private void OnDrawGizmos(){
-        if (vertices == null){
+        /*if (vertices == null){
             return;
         }
 
         for(int i = 0; i<vertices.Length; i++)
-            Gizmos.DrawSphere(vertices[i], .1f);
+            Gizmos.DrawSphere(vertices[i], .1f);*/
     }
 
     void UpdateMesh(){
@@ -83,21 +86,21 @@ public class MeshGenerator : MonoBehaviour
 
     // TBD: will contain the Perlin noise generated Y-values with layered octaves
     float GenerateNoiseMap(int x, int z, float scale) {
-	// float[,] noiseMap = new float[mapWidth,mapHeight];
-	float perlinY;
-	if (scale <= 0) {
-		scale = 0.0001f;
-	}
+	    // float[,] noiseMap = new float[mapWidth,mapHeight];
+	    float perlinY;
+	    if (scale <= 0) {
+		    scale = 0.0001f;
+	    }
 
 	
-	float sampleX = x / scale;
-	float sampleZ = z / scale;
+	    float sampleX = x / scale;
+	    float sampleZ = z / scale;
 
-	perlinY = Mathf.PerlinNoise (sampleX, sampleZ);
-	// noiseMap [x, y] = perlinValue;
+	    perlinY = Mathf.PerlinNoise (sampleX, sampleZ);
+	    // noiseMap [x, y] = perlinValue;
 
 
-	return perlinY;
-}
+	    return perlinY;
+    }
 
 }
