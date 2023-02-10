@@ -10,9 +10,14 @@ public class MeshGenerator : MonoBehaviour
 
     Vector3[] vertices; 
     int[] triangles;
+
+
+
     public float xpos = 0;
     public float zpos = 0;
-    public int xSize = 20, zSize = 20;
+    public int step = 2;
+    //public int xSize = 20, zSize = 20;
+    public int cSize = 20;
     public float scale = 0.39f;
 
     void Start(){
@@ -36,26 +41,32 @@ public class MeshGenerator : MonoBehaviour
 
     // void-return function made coroutine for the delay thingy 
     void CreateShape(){
-        vertices = new Vector3[(xSize+1)* (zSize+1)];
+        int numx = cSize / step;
+        int numz = cSize / step;
+
+
+        vertices = new Vector3[(numx +1)* (numz+1)];
+        
 
         // creates vertices array of the given size 
-        for(int i = 0, z = 0; z <= zSize; z++){
-            for(int x = 0; x <= xSize; x++){
-                float y = Mathf.PerlinNoise((x+xpos)*scale,(z + zpos)*scale) * 1.5f + Mathf.PerlinNoise((x + xpos) * scale *0.5f, (z + zpos) * scale*0.5f) * 4f; 
+        for(int i = 0, z = 0; z <= numz; z++){
+            for(int x = 0; x <= numx; x++){
+                float y = Mathf.PerlinNoise((x*step+xpos)*scale,(z*step + zpos)*scale) * 3f + Mathf.PerlinNoise((x*step + xpos) * scale *0.5f, (z*step + zpos) * scale*0.5f) * 10f; 
+                
                 // float y = GenerateNoiseMap(x, z, scale);
-                vertices[i] = new Vector3(x, y, z);
+                vertices[i] = new Vector3(x*step, y, z*step);
                 i++;
             }
         }
 
         // makes 2 triangle meshes in each run using the vertices in clockwise direction
         int m = 0, tris=0;
-        triangles = new int[xSize * zSize * 6];
-        for(int z = 0; z< zSize; z++){
-            for(int x=0; x< xSize; x++){  
+        triangles = new int[(numx) * (numz) * 6];
+        for(int z = 0; z< numz; z++){
+            for(int x=0; x< numx; x++){  
             
             triangles[tris] = m;
-            triangles[tris+1] = xSize + m +1;
+            triangles[tris+1] = numx + m +1;
             triangles[tris+2] = ++m;
 
             // yield return new WaitForSeconds(.1f);

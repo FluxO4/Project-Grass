@@ -34,36 +34,36 @@ public class Camera_Controller : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-      float h = 5f * Input.GetAxis("Mouse X") * cameraspeed;
+      float h = 5f * Input.GetAxis("Mouse X") * cameraspeed * 0.001f;
 
 
-      float v = -2.5f * Input.GetAxis("Mouse Y") * cameraspeed;
+      float v = -2.5f * Input.GetAxis("Mouse Y") * cameraspeed * 0.001f;
             if (Input.GetKey("f")){h = 0; v = 0;}
 
 
 
       if(Input.GetMouseButton(1)){
-        player.transform.Rotate(Vector3.up, h * Time.deltaTime * 5, Space.Self);
+        player.transform.Rotate(Vector3.up, h * 5, Space.Self);
           //head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x, head.transform.localEulerAngles.y + h * Time.deltaTime * 5, head.transform.localEulerAngles.z);
       }
       else{
           //player.transform.localEulerAngles = new Vector3(player.transform.localEulerAngles.x, player.transform.localEulerAngles.y + h * Time.deltaTime * 20, player.transform.localEulerAngles.z);
           //head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x, head.transform.localEulerAngles.y + h * Time.deltaTime * 20, head.transform.localEulerAngles.z);
-          player.transform.Rotate(Vector3.up, h * Time.deltaTime * 20, Space.Self);
+          player.transform.Rotate(Vector3.up, h  * 20, Space.Self);
       }
 
       //head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * Time.deltaTime * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
 
       if(!Input.GetMouseButton(1) || !Input.GetKey("left shift")){
-      if(head.transform.localEulerAngles.x + v * Time.deltaTime * 20 > 70 && head.transform.localEulerAngles.x + v * Time.deltaTime * 20 <= 180){
+      if(head.transform.localEulerAngles.x + v * 20 > 70 && head.transform.localEulerAngles.x + v * 20 <= 180){
           head.transform.localEulerAngles = new Vector3(70, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
       }
       else
-      if(head.transform.localEulerAngles.x + v * Time.deltaTime * 20 < 280 && head.transform.localEulerAngles.x + v * Time.deltaTime * 20 > 180){
+      if(head.transform.localEulerAngles.x + v  * 20 < 280 && head.transform.localEulerAngles.x + v * 20 > 180){
           head.transform.localEulerAngles = new Vector3(280, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
       }
       else{
-          head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * Time.deltaTime * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
+          head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
       }
       }
     }

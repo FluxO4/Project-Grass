@@ -24,7 +24,7 @@ public class TerrainGenerator : MonoBehaviour
 
 
     public GameObject chunkPrefab;
-    public int cSize= 10;
+    public int cSize= 20;
 
     public int generateRadius = 5;
 
@@ -56,6 +56,7 @@ public class TerrainGenerator : MonoBehaviour
 
                             t.name = x.ToString() + " " + z.ToString() + " Chunk";
                             MeshGenerator tmg = t.GetComponent<MeshGenerator>();
+                            tmg.cSize = cSize;
                             tmg.xpos = x * cSize;
                             tmg.zpos = z * cSize;
                             tmg.Generate();
@@ -74,6 +75,7 @@ public class TerrainGenerator : MonoBehaviour
         foreach (Vector2Int key in generatorList.Keys) {
             if ((key - new Vector2Int(xPos, yPos)).sqrMagnitude > radius * radius) {
                 GameObject t = generatorList[key].gameObject;
+                
                 removeKeys.Add(key);
 // generatorList.Remove(key);
                 Destroy(t);

@@ -57,8 +57,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xpos: 0
   zpos: 0
-  xSize: 10
-  zSize: 10
+  step: 1
+  cSize: 20
   scale: 0.1
 --- !u!23 &5079813895939485864
 MeshRenderer:
@@ -81,6 +81,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 78d8f7b3b793d11418f5ca5e7eba1638, type: 2}
+  - {fileID: 2100000, guid: dc23b46c0890b774bb9bbeb2aa16645d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

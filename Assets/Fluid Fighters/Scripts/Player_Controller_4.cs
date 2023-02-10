@@ -185,6 +185,9 @@ public class Player_Controller_4 : MonoBehaviour
                 {
                     moveForce = player.transform.forward * speed * 10;
                 }
+                else {
+                    anim.SetBool("Walking", false);
+                }
 
                 
             }
@@ -334,9 +337,9 @@ public class Player_Controller_4 : MonoBehaviour
 
             if (Input.GetKeyUp(jumpkey) && !fighting)
             {
-                float strength = Time.time - jumpSetTime;
+                float strength = Time.realtimeSinceStartup - jumpSetTime;
                 strength = Mathf.Min(strength, 1);
-                moveForce = moveForce - down * jumpSpeed * strength * 500;
+                moveForce = moveForce - Physics.gravity * jumpSpeed;
                 if (strength > 0.5f)
                 {
                     anim.SetBool("High Speed Impact", true);
@@ -347,6 +350,11 @@ public class Player_Controller_4 : MonoBehaviour
                 }
                 anim.SetTrigger("Jump");
                 StartCoroutine(jumpReset());
+            }
+
+            if (Input.GetKeyDown(jumpkey))
+            {
+                jumpSetTime = Time.realtimeSinceStartup;
             }
 
             //gravit
@@ -376,7 +384,7 @@ public class Player_Controller_4 : MonoBehaviour
 
 
 
-        player.AddForce(moveForce * 50 * Time.deltaTime);
+        player.AddForce(moveForce);
     }
 
     private void Start()
