@@ -27,14 +27,17 @@ public class Player_Controller_4 : MonoBehaviour
     bool _isplayergrounded = false;
 
 
-    string forwardkey = ",";
+    string forwardkey = "w";
+    string forwardkey2 = ",";
+
     string jumpkey = "space";
     string sprintkey = "left ctrl";
     //string supersprintkey = "f";
     //string backwardkey = "o";
     //string leftkey = "a";
     //string rightkey = "e";
-    string drawswordkey = ".";
+    string drawswordkey = "e";
+    string drawswordkey2 = ".";
 
 
     Rigidbody player;
@@ -105,18 +108,23 @@ public class Player_Controller_4 : MonoBehaviour
         anim.ResetTrigger("SwitchWeapon");
     }
 
-    IEnumerator holdSword()
+    IEnumerator holdSword(float waitTime = 0.88f)
     {
-        yield return new WaitForSeconds(0.88f);
-        sword.SetActive(true);
-        sheathedsword.SetActive(false);
+        yield return new WaitForSeconds(waitTime);
+        if (fighting || (Weapon == 2 && fighting)) { 
+            sword.SetActive(true);
+            sheathedsword.SetActive(false);
+        }
     }
 
     IEnumerator sheathSword()
     {
         yield return new WaitForSeconds(0.6f);
-        sword.SetActive(false);
-        sheathedsword.SetActive(true);
+        if (!fighting || Weapon == 1)
+        {
+            sword.SetActive(false);
+            sheathedsword.SetActive(true);
+        }
 
     }
 
@@ -173,16 +181,23 @@ public class Player_Controller_4 : MonoBehaviour
             else
             {
                 //movement
-                if (Input.GetKey(forwardkey) && !fighting)
+                if ((Input.GetKey(forwardkey) || Input.GetKey(forwardkey2)) && !fighting)
                 {
                     moveForce = player.transform.forward * speed * 10;
                 }
 
-                if (Input.GetKey(sprintkey) && !fighting)
-                {
-                    maxspeed = maxsprintspeed;
-                    anim.SetBool("Sprinting", true);
-                }
+                
+            }
+            if (Input.GetKeyDown(sprintkey) && !fighting)
+            {
+                maxspeed = maxsprintspeed;
+                anim.SetBool("Sprinting", true);
+            }
+
+            if (Input.GetKeyUp(sprintkey) && !fighting)
+            {
+                maxspeed = maxwalkspeed;
+                anim.SetBool("Sprinting", false);
             }
 
             if (player.velocity.sqrMagnitude < 0.01f)
@@ -271,15 +286,18 @@ public class Player_Controller_4 : MonoBehaviour
 
                         anim.SetInteger("Hit Direction 2", hitDirection2);
                         //Debug.Log("Hit in direction" + hitDirection);
-                        anim.SetTrigger("Hold Hit");
-                        holdHit = true;
+                        //anim.SetTrigger("Hold Hit");
+                        //holdHit = true;
+
+                        anim.SetTrigger("Hit");
+                        StartCoroutine(hitCooldown());
                     }
 
                     rightorleft = !rightorleft;
                     anim.SetBool("Right Hand", rightorleft);
                 }
 
-                if (Input.GetMouseButtonUp(0)) {
+               /* if (Input.GetMouseButtonUp(0)) {
                     if (holdHit) {
 
 
@@ -293,20 +311,22 @@ public class Player_Controller_4 : MonoBehaviour
 
                     }
                 
-                }
+                }*/
 
-                if (Input.GetKeyDown(drawswordkey)) {
+                if (Input.GetKeyDown(drawswordkey) || Input.GetKeyDown(drawswordkey2)) {
                     if (Weapon == 1) {
                         Weapon = 2;
                         anim.SetInteger("Weapon", 2);
                         anim.SetTrigger("SwitchWeapon");
-                        StartCoroutine(holdSword());
+                        StartCoroutine(swithWeaponReset());
+                        StartCoroutine(holdSword(0.45f));
                     }
                     else
                     {
                         Weapon = 1;
                         anim.SetInteger("Weapon", 1);
                         anim.SetTrigger("SwitchWeapon");
+                        StartCoroutine(swithWeaponReset());
                         StartCoroutine(sheathSword());
                     }
                 }
