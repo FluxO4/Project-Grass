@@ -54,17 +54,19 @@ public class Camera_Controller : MonoBehaviour
 
       //head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * Time.deltaTime * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
 
-      if(!Input.GetMouseButton(1) || !Input.GetKey("left shift")){
-      if(head.transform.localEulerAngles.x + v * 20 > 70 && head.transform.localEulerAngles.x + v * 20 <= 180){
-          head.transform.localEulerAngles = new Vector3(70, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
-      }
-      else
-      if(head.transform.localEulerAngles.x + v  * 20 < 280 && head.transform.localEulerAngles.x + v * 20 > 180){
-          head.transform.localEulerAngles = new Vector3(280, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
-      }
-      else{
-          head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
-      }
-      }
+      if(!Input.GetMouseButton(1)){
+            /*if(head.transform.localEulerAngles.x + v * 20 > 70 && head.transform.localEulerAngles.x + v * 20 <= 180){
+                head.transform.localEulerAngles = new Vector3(70, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
+            }
+            else
+            if(head.transform.localEulerAngles.x + v  * 20 < 280 && head.transform.localEulerAngles.x + v * 20 > 180){
+                head.transform.localEulerAngles = new Vector3(280, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
+            }
+            else{
+                head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
+            }*/
+
+            head.transform.Rotate(Vector3.right, v * 20, Space.Self);
+        }
     }
 }

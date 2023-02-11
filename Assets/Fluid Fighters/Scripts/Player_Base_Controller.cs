@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class Player_Base_Controller : MonoBehaviour
 {
-    public Player_Controller_4 playerController;
+    public Player_ControllerCC playerController;
 
+    private void Start()
+    {
+        Debug.Log("player base exists");
+    }
     void OnTriggerStay(Collider other){
+
+        //if (other.tag != "Player")
         if (!playerController.isplayergrounded)
         {
-            playerController.groundImpact();
+            playerController.isplayergrounded = true;
         }
-        //Debug.Log("GROUNDED");}
+        Debug.Log("GROUNDED");
     }
 
     void OnTriggerExit(Collider other){
 
         playerController.isplayergrounded = false;
 
-        //Debug.Log("IN AIR");
+        Debug.Log("IN AIR");
     }
 
 }

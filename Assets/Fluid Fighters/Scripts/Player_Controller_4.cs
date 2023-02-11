@@ -339,8 +339,8 @@ public class Player_Controller_4 : MonoBehaviour
             {
                 float strength = Time.realtimeSinceStartup - jumpSetTime;
                 strength = Mathf.Min(strength, 1);
-                moveForce = moveForce - Physics.gravity * jumpSpeed;
-                if (strength > 0.5f)
+                moveForce = moveForce - Physics.gravity * jumpSpeed * 10 * strength;
+                if (strength > 0.2f)
                 {
                     anim.SetBool("High Speed Impact", true);
                 }
@@ -361,7 +361,7 @@ public class Player_Controller_4 : MonoBehaviour
         }
         else
         {
-            moveForce = Physics.gravity;
+            moveForce = Physics.gravity * 0.2f;
             if (player.velocity.y >= 0)
             {
                 if (anim.GetBool("Falling") == true)
@@ -384,7 +384,7 @@ public class Player_Controller_4 : MonoBehaviour
 
 
 
-        player.AddForce(moveForce);
+        player.AddForce(moveForce * Time.deltaTime);
     }
 
     private void Start()
