@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Player_ControllerCC : MonoBehaviour
 {
+
     public bool isplayergrounded
     {
         get
@@ -46,6 +47,8 @@ public class Player_ControllerCC : MonoBehaviour
 
     //Rigidbody player;
     public CharacterController playerCC;
+
+    public Random_Controller ran;
 
     public Animator anim;
 
@@ -308,7 +311,7 @@ public class Player_ControllerCC : MonoBehaviour
                     }
                 }*/
 
-                if ((Input.GetKey(forwardkey) || Input.GetKey(forwardkey2)))
+                if ((Input.GetKey(forwardkey) || Input.GetKey(forwardkey2) || ran.movingForward))
                 {
                     moveForce = playerCC.transform.forward * maxspeed * 0.2f;
                     if (!walking)
