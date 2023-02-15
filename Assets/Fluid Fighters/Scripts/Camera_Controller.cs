@@ -23,6 +23,8 @@ public class Camera_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
 
         if (Input.GetKeyDown("escape")){
             Cursor.lockState = CursorLockMode.None;
@@ -75,7 +77,7 @@ public class Camera_Controller : MonoBehaviour
             else{
                 head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * 20, head.transform.localEulerAngles.y , head.transform.localEulerAngles.z);
             }*/
-            Debug.Log(head.transform.localEulerAngles.x);
+            //Debug.Log(head.transform.localEulerAngles.x);
             float a = head.transform.localEulerAngles.x;
             a-= Mathf.Floor(a / 360.0f + 0.5f) * 360;
 

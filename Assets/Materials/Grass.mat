@@ -87,11 +87,11 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessellationUniform: 1
+    - _TessellationUniform: 31.6
     - _TranslucentGain: 0.5
     - _UVSec: 0
     - _WindScale: 1
-    - _WindStrength: 0.2
+    - _WindStrength: 0.43
     - _ZWrite: 1
     m_Colors:
     - _BottomColor: {r: 0.09883537, g: 0.21698111, b: 0.041963324, a: 1}

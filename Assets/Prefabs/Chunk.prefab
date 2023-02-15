@@ -55,6 +55,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d8ea64344dfd843a51cdcc8bc62e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grassMaterial: {fileID: 2100000, guid: dc23b46c0890b774bb9bbeb2aa16645d, type: 2}
+  landMaterial: {fileID: 2100000, guid: 78d8f7b3b793d11418f5ca5e7eba1638, type: 2}
   xpos: 0
   zpos: 0
   step: 1
@@ -81,7 +83,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 78d8f7b3b793d11418f5ca5e7eba1638, type: 2}
-  - {fileID: 2100000, guid: dc23b46c0890b774bb9bbeb2aa16645d, type: 2}
+  - {fileID: 2100000, guid: 78d8f7b3b793d11418f5ca5e7eba1638, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

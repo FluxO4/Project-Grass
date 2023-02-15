@@ -7,6 +7,12 @@ public class MeshGenerator : MonoBehaviour
 {
     Mesh mesh;
     MeshCollider meshCollider;
+    MeshFilter meshFilter;
+    MeshRenderer meshRenderer;
+
+
+    public Material grassMaterial;
+    public Material landMaterial;
 
     Vector3[] vertices; 
     int[] triangles;
@@ -23,11 +29,14 @@ public class MeshGenerator : MonoBehaviour
     void Start(){
         xpos = transform.position.x;
         zpos = transform.position.z;
+        meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void Generate() {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
         CreateShape();  //make this changeable form UI??
         mesh.vertices = vertices;
@@ -35,6 +44,17 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateNormals();
         meshCollider.sharedMesh = mesh;
     }
+
+    public void EnableGrass() {
+        Material[] t = { grassMaterial, landMaterial };
+        meshRenderer.materials = t;
+    }
+
+    public void DisableGrass() {
+        Material[] t = { landMaterial };
+        meshRenderer.materials = t;
+    }
+
     private void Update(){
         //UpdateMesh();
     }

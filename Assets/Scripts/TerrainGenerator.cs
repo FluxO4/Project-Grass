@@ -89,6 +89,31 @@ public class TerrainGenerator : MonoBehaviour
 
     }
 
+    public bool grassEnabled = false;
+    public void EnableGrass()
+    {
+        Debug.Log("Enabled Grass");
+        grassEnabled = true;
+        foreach (Vector2Int key in generatorList.Keys)
+        
+        {
+            generatorList[key].EnableGrass();
+        }
+
+    }
+
+    public void DisableGrass()
+    {
+        Debug.Log("Disabled Grass");
+        grassEnabled = false;
+        foreach (Vector2Int key in generatorList.Keys)
+
+        {
+            generatorList[key].DisableGrass();
+        }
+
+    }
+
     IEnumerator terrainUpdate()
     {
         for(; ; )
