@@ -12,10 +12,10 @@ from PIL import Image
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
+socket.bind("tcp://*:8888")
 
 def get_image():
-    socket.send(b"GIB")
+    #socket.send(b"GIB")
 
     #  Wait for next request from client
     #width = socket.recv()
@@ -25,9 +25,12 @@ def get_image():
     message = socket.recv()
     #print("Received request: %s" % message)
     
-    #img = Image.frombytes("RGB", (200, 200), message)
-    print(message)
-    #img.show()
+    #
+    if(len(message)<10):
+        print(message)
+    else:
+        img = Image.frombuffer("RGB", (200, 200), message)
+        img.show()
 
     #  Do some 'work'.
     #  Try reducing sleep time to 0.01 to see how blazingly fast it communicates
@@ -37,7 +40,7 @@ def get_image():
 
     #  Send reply back to client
     #  In the real world usage, after you finish your work, send your output here
-    socket.send(b"Received")
+    socket.send(b"GIB")
 
 while(True):
     a=str(input("give key"))
@@ -45,3 +48,5 @@ while(True):
         break;
     if(a=="p"):
         get_image()
+
+b = input()

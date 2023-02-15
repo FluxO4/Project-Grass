@@ -37,6 +37,7 @@ public class Camera_Controller : MonoBehaviour
       float h = 5f * Input.GetAxis("Mouse X") * cameraspeed * 0.001f;
 
 
+
       float v = -2.5f * Input.GetAxis("Mouse Y") * cameraspeed * 0.001f;
             if (Input.GetKey("f")){h = 0; v = 0;}
 

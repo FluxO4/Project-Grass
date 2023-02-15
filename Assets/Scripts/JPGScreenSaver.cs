@@ -44,12 +44,13 @@ public class JPGScreenSaver : MonoBehaviour
         tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         tex.Apply();
 
-        // Encode the texture in JPG format
-        bytes = tex.EncodeToJPG();
+        // Encode the texture in raw format , not JPG format
+        bytes = tex.GetRawTextureData();
 
         Object.Destroy(tex);
         // Write the returned byte array to a file in the project folder
-        //File.WriteAllBytes(Application.dataPath + "/../SavedScreen.jpg", bytes);
+        Debug.Log("Finished taking screenshot");
+        //File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", bytes);
     }
 
     public void takeSS()

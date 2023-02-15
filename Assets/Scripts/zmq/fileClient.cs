@@ -6,21 +6,28 @@ public class fileClient : MonoBehaviour
 {
     private fileRequester _fileRequester;
     public JPGScreenSaver _JPGScreenSaver;
-
+    public Camera mainCam;
+    public RenderTexture camView;
     private void Start()
     {
-        _JPGScreenSaver.takeSS();
         _fileRequester = new fileRequester();
+        Debug.Log("Instance of fileRequester created");
         _fileRequester._fileClient = this;
+        Debug.Log("FileClient connected to fileRequester");
         _fileRequester.Start();
+        Debug.Log("fileRequester started");
+
+
+
     }
     void Update()
     {
         if (Input.GetKeyDown("c"))
         {
-            print("working??????");
+            print("Taking screenshot");
             _JPGScreenSaver.takeSS();
-            _fileRequester.Start();
+            Debug.Log(_JPGScreenSaver.bytes.Length);
+            print("Tetete");
 
         }
     }
