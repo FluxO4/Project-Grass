@@ -31,6 +31,8 @@ public class Player_ControllerCC : MonoBehaviour
 
     bool _isplayergrounded = false;
 
+    public GameObject WorldLight;
+
 
     string forwardkey = "w";
     string forwardkey2 = ",";
@@ -94,6 +96,8 @@ public class Player_ControllerCC : MonoBehaviour
     float jumpSetTime;
     int hitDirection = 0;
     int hitDirection2 = 0;
+    Vector3 lastPos = Vector3.zero;
+    Vector3 lastEulers = Vector3.zero;
 
     IEnumerator jumpReset()
     {
@@ -437,9 +441,17 @@ public class Player_ControllerCC : MonoBehaviour
         //moveForce *= 0.99f;
         
         playerVelocity += Physics.gravity * Time.deltaTime;
-        
+
+
+        lastPos = transform.position;
+        lastEulers = transform.eulerAngles;
         playerCC.Move((playerVelocity+moveForce) * Time.deltaTime);
         //playerCC.Move(moveForce * Time.deltaTime);
+
+    }
+
+    public InputVectors getInputVectors() {
+        return new InputVectors(transform.position, transform.position - lastPos, transform.eulerAngles, transform.eulerAngles - lastEulers, head.transform.forward - WorldLight.transform.forward);
     }
 
     private void Start()
@@ -447,9 +459,29 @@ public class Player_ControllerCC : MonoBehaviour
         anim.SetInteger("Weapon", Weapon);
         Physics.gravity = down * gravity;
         playerCC = GetComponent<CharacterController>();
-        
 
+        lastPos = transform.position;
+        lastEulers = transform.eulerAngles;
     }
 
+
+}
+
+public class InputVectors
+{
+    public Vector3 position;
+    public Vector3 velocity;
+    public Vector3 rotation;
+    public Vector3 rotationalVelocity;
+    public Vector3 lightingDifference;
+
+    public InputVectors(Vector3 _position, Vector3 _velocity, Vector3 _rotation, Vector3 _rotationalVelocity, Vector3 _lightingDifference)
+    {
+        position = _position;
+        velocity = _velocity;
+        rotation = _rotation;
+        rotationalVelocity = _rotationalVelocity;
+        lightingDifference = _lightingDifference;
+    }
 
 }

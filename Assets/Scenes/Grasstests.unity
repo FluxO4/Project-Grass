@@ -359,6 +359,10 @@ PrefabInstance:
       propertyPath: ran
       value: 
       objectReference: {fileID: 1998838452}
+    - target: {fileID: 6152815503632214281, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
+      propertyPath: WorldLight
+      value: 
+      objectReference: {fileID: 1393219951}
     - target: {fileID: 7031149094313334808, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_Radius
       value: 0.61
