@@ -703,6 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ef91faaaecd25746a756df0e3518c68, type: 3}
+--- !u!20 &1737928056 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4792905786809787519, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
+  m_PrefabInstance: {fileID: 283650294}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1998838451
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +842,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 1310451401}
   terrainGenerator: {fileID: 2044046521}
+  mainCam: {fileID: 1737928056}
+  saveHelper: {fileID: 8400000, guid: 2a8673df9c2bffd458525ac95973a294, type: 2}
+  dataSavePath: D:/TrainingData/
+  saveTrainingdata: 0
+  saveCounter: 0
 --- !u!4 &2047255019
 Transform:
   m_ObjectHideFlags: 0
