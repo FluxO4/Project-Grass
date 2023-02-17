@@ -10,25 +10,29 @@ public class MainController : MonoBehaviour
     public TerrainGenerator terrainGenerator;
     public Camera mainCam;
     public RenderTexture saveHelper;
-
+    public  ImageSynthesis imageSynthesis;
     //public Vector2Int saveResolution = new Vector2Int(800, 480);
 
-    public string dataSavePath = "D:/TrainingData/";
+    // public string dataSavePath = "D:/TrainingData/";
 
-    public bool saveTrainingdata = false;
+    public bool saveTrainingdata = true;
 
     public int saveCounter = 0;
+    public string header = "Index,Input Image Paths,Depth Image Paths,Optical Flow Image Paths,Output Image Paths,Px,Py,Pz,Vx,Vy,Vz,Rx,Ry,Rz,RVx,RVy,RVz,Lx,Ly,Lz";
 
     RenderTexture trainingDataRenderTexture;
 
     void Start()
     {
         mainCam = Camera.main;
+        File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyUp("g"))
         {
             if (!terrainGenerator.grassEnabled)
@@ -49,27 +53,37 @@ public class MainController : MonoBehaviour
 
         if (Input.GetKeyUp("l") || saveTrainingdata)
         {
-
+            
             mainCam.Render();
 
-            // Save the current view, identified as 'input'   , maybe replace saveCounter by by date-time with this: System.DateTime.Now.ToString() , but problem is that it contains the '/' character which will need to be removed
-            SaveCurrentView(dataSavePath + saveCounter + "_input.jpg");
+            // Below comment saves as system date/time string format, to be checked if sequentially retrievable
+            // SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/"+ System.DateTime.Now.ToString("yyyyMMddHHmmss") + "_input.jpg");
+            SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg");
 
             // Save the depth map
+             mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/");
             // Save the optical flow map
             // Get player input values (using a function in playerController that Quartermaster Shell Rock will provide soon)
+
+            string values = ""; 
             // Append player input values to a csv file in the dataSavePath
+            File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", values+'\n');
 
             terrainGenerator.EnableGrass();
             mainCam.Render();
 
             // Save the current view again, identified as 'output'
-            SaveCurrentView(dataSavePath + saveCounter + "_output.jpg");
+            SaveCurrentView(Application.dataPath + "/TrainingData/Outputs/" + saveCounter + "_output.jpg");
 
             terrainGenerator.DisableGrass();
+            
+             
 
             saveCounter++;
         }
+
+
+       
     }
 
     void SaveCurrentView(string path)

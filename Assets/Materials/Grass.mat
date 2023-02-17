@@ -87,16 +87,16 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessellationUniform: 2.8
-    - _TranslucentGain: 0.5
+    - _TessellationUniform: 2
+    - _TranslucentGain: 0.522
     - _UVSec: 0
     - _WindScale: 1
     - _WindStrength: 0.43
     - _ZWrite: 1
     m_Colors:
-    - _BottomColor: {r: 0.09883537, g: 0.21698111, b: 0.041963324, a: 1}
+    - _BottomColor: {r: 0.007564955, g: 0.23584908, b: 0.077662915, a: 0}
     - _Color: {r: 0, g: 0.5754717, b: 0.06694827, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TopColor: {r: 0.29039994, g: 0.5283019, b: 0.08223568, a: 1}
+    - _TopColor: {r: 0.064791724, g: 0.6603774, b: 0.23230104, a: 0}
     - _WindFrequency: {r: 0.05, g: 0.05, b: 0, a: 0}
   m_BuildTextureStacks: []
