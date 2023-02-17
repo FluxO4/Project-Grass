@@ -1,7 +1,0 @@
-Index,Input Image Paths,Depth Image Paths,Optical Flow Image Paths,Output Image Paths,Px,Py,Pz,Vx,Vy,Vz,Rx,Ry,Rz,RVx,RVy,RVz,Lx,Ly,Lz
-Index,Input Image Paths,Depth Image Paths,Optical Flow Image Paths,Output Image Paths,Px,Py,Pz,Vx,Vy,Vz,Rx,Ry,Rz,RVx,RVy,RVz,Lx,Ly,Lz
-Index,Input Image Paths,Depth Image Paths,Optical Flow Image Paths,Output Image Paths,Px,Py,Pz,Vx,Vy,Vz,Rx,Ry,Rz,RVx,RVy,RVz,Lx,Ly,Lz
-0,D:/Project-Grass/Assets/TrainingData/Inputs/0_input.jpg,./Assets/TrainingData/Depth/0_synth_depth.png,./Assets/TrainingData/OFlow/0_synth_oflow.png,D:/Project-Grass/Assets/TrainingData/Outputs/0_output.jpg,-12.09484,8.053462,28.25,0,0,0,0,349.4001,0,0,0,0,0.1387597,0.8854566,0.419232
-1,D:/Project-Grass/Assets/TrainingData/Inputs/1_input.jpg,./Assets/TrainingData/Depth/1_synth_depth.png,./Assets/TrainingData/OFlow/1_synth_oflow.png,D:/Project-Grass/Assets/TrainingData/Outputs/1_output.jpg,-12.09484,8.053462,28.25,0,0,0,0,349.4001,0,0,0,0,0.1387597,0.8854566,0.419232
-2,D:/Project-Grass/Assets/TrainingData/Inputs/2_input.jpg,./Assets/TrainingData/Depth/2_synth_depth.png,./Assets/TrainingData/OFlow/2_synth_oflow.png,D:/Project-Grass/Assets/TrainingData/Outputs/2_output.jpg,-12.09484,8.053462,28.25,0,0,0,0,349.4001,0,0,0,0,0.1387597,0.8854566,0.419232
-3,D:/Project-Grass/Assets/TrainingData/Inputs/3_input.jpg,./Assets/TrainingData/Depth/3_synth_depth.png,./Assets/TrainingData/OFlow/3_synth_oflow.png,D:/Project-Grass/Assets/TrainingData/Outputs/3_output.jpg,-12.09484,8.053462,28.25,0,0,0,0,349.4001,0,0,0,0,0.1387597,0.8854566,0.419232
