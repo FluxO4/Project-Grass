@@ -10,7 +10,7 @@ public class MainController : MonoBehaviour
     public TerrainGenerator terrainGenerator;
     public Camera mainCam;
     public RenderTexture saveHelper;
-    public  ImageSynthesis imageSynthesis;
+    
     //public Vector2Int saveResolution = new Vector2Int(800, 480);
 
     // public string dataSavePath = "D:/TrainingData/";
@@ -61,7 +61,7 @@ public class MainController : MonoBehaviour
             SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg");
 
             // Save the depth map
-             mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/");
+            mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/");
             // Save the optical flow map
             // Get player input values (using a function in playerController that Quartermaster Shell Rock will provide soon)
 
