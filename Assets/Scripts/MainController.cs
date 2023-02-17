@@ -25,7 +25,7 @@ public class MainController : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
+        // File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
 
     }
 
@@ -65,7 +65,7 @@ public class MainController : MonoBehaviour
             // Save the optical flow map
             // Get player input values (using a function in playerController that Quartermaster Shell Rock will provide soon)
 
-            string values = ""; 
+            // string values = ""; 
             // Append player input values to a csv file in the dataSavePath
             File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", values+'\n');
 
