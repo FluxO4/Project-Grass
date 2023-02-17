@@ -10,9 +10,9 @@ public class MainController : MonoBehaviour
     public TerrainGenerator terrainGenerator;
     public Camera mainCam;
     public RenderTexture saveHelper;
-    
-    //public Vector2Int saveResolution = new Vector2Int(800, 480);
+   
 
+    //public Vector2Int saveResolution = new Vector2Int(800, 480);
     // public string dataSavePath = "D:/TrainingData/";
 
     public bool saveTrainingdata = true;
@@ -53,45 +53,44 @@ public class MainController : MonoBehaviour
 
         if (Input.GetKeyUp("l") || saveTrainingdata)
         {
-            
+            InputVectors _inputVectors = playerController.getInputVectors();
+            print(_inputVectors.position[0]);
             mainCam.Render();
 
             // Below comment saves as system date/time string format, to be checked if sequentially retrievable
             // SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/"+ System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_input.jpg");
+            
+            string synthPath = "./Assets/TrainingData/";
+            string pathOFlow = synthPath + "OFlow/" + saveCounter + "_synth_oflow.png";  
+            string pathDepth = synthPath + "Depth/" + saveCounter + "_synth_depth.png"; 
+
             string inputImageWithPath = Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg";
+            string outputImageWithPath = Application.dataPath + "/TrainingData/Outputs/" + saveCounter + "_output.jpg";
+
+            // Save the current view, identified as 'input'
             SaveCurrentView(inputImageWithPath);
 
-            // Save the depth map
-            string synthPath = saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/";
-            mainCam.GetComponent<ImageSynthesis>().Save(synthPath);
-            // Save the optical flow map
-            // Get player input values (using a function in playerController that Quartermaster Shell Rock will provide soon)
-
-            
+            // Save the depth map and optical flow map
+            mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, synthPath);
+        
             // Append player input values to a csv file in the dataSavePath
-            string values = saveCounter; 
+            string values = "" + saveCounter +"," + inputImageWithPath + "," + pathDepth + "," + pathOFlow + "," + outputImageWithPath + "," + _inputVectors.position[0] + "," + _inputVectors.position[1] + "," + _inputVectors.position[2] + "," + _inputVectors.velocity[0] + "," +_inputVectors.velocity[1]+ "," +_inputVectors.velocity[2]+ "," +_inputVectors.rotation[0]+ "," +_inputVectors.rotation[1]+ "," + _inputVectors.rotation[2] + "," + _inputVectors.rotationalVelocity[0]+ "," + _inputVectors.rotationalVelocity[1]+ "," + _inputVectors.rotationalVelocity[2]+"," + _inputVectors.lightingDifference[0]+ "," + _inputVectors.lightingDifference[1]+ "," + _inputVectors.lightingDifference[2]; 
             File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", values+'\n');
 
             terrainGenerator.EnableGrass();
             mainCam.Render();
 
             // Save the current view again, identified as 'output'
-            SaveCurrentView(Application.dataPath + "/TrainingData/Outputs/" + saveCounter + "_output.jpg");
+            SaveCurrentView(outputImageWithPath);
 
             terrainGenerator.DisableGrass();
             
-             
-
             saveCounter++;
-        }
-
-
-       
+        } 
     }
 
     void SaveCurrentView(string path)
     {
-
         mainCam.targetTexture = saveHelper;
         RenderTexture.active = saveHelper;
 
