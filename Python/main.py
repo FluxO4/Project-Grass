@@ -45,7 +45,7 @@ def get_image():
 while(True):
     a=str(input("give key"))
     if(a=="q"):
-        break;
+        break
     if(a=="p"):
         get_image()
 
