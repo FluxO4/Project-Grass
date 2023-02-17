@@ -25,7 +25,7 @@ public class MainController : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        // File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
+        File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
 
     }
 
@@ -57,16 +57,19 @@ public class MainController : MonoBehaviour
             mainCam.Render();
 
             // Below comment saves as system date/time string format, to be checked if sequentially retrievable
-            // SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/"+ System.DateTime.Now.ToString("yyyyMMddHHmmss") + "_input.jpg");
-            SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg");
+            // SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/"+ System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_input.jpg");
+            string inputImageWithPath = Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg";
+            SaveCurrentView(inputImageWithPath);
 
             // Save the depth map
-            mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/");
+            string synthPath = saveCounter+"_synth", -1, -1, Application.dataPath + "/TrainingData/";
+            mainCam.GetComponent<ImageSynthesis>().Save(synthPath);
             // Save the optical flow map
             // Get player input values (using a function in playerController that Quartermaster Shell Rock will provide soon)
 
-            // string values = ""; 
+            
             // Append player input values to a csv file in the dataSavePath
+            string values = saveCounter; 
             File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", values+'\n');
 
             terrainGenerator.EnableGrass();
