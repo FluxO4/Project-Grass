@@ -16,6 +16,7 @@ public class MeshGenerator : MonoBehaviour
 
     Vector3[] vertices; 
     int[] triangles;
+    Vector2[] uvs;
 
 
 
@@ -41,6 +42,7 @@ public class MeshGenerator : MonoBehaviour
         CreateShape();  //make this changeable form UI??
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
         mesh.RecalculateNormals();
         meshCollider.sharedMesh = mesh;
     }
@@ -66,6 +68,7 @@ public class MeshGenerator : MonoBehaviour
 
 
         vertices = new Vector3[(numx +1)* (numz+1)];
+        uvs = new Vector2[vertices.Length];
         
 
         // creates vertices array of the given size 
@@ -75,6 +78,7 @@ public class MeshGenerator : MonoBehaviour
                 
                 // float y = GenerateNoiseMap(x, z, scale);
                 vertices[i] = new Vector3(x*step, y, z*step);
+                uvs[i] = new Vector2(vertices[i].x, vertices[i].z);
                 i++;
             }
         }

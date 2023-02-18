@@ -9,7 +9,7 @@ public class Camera_Controller : MonoBehaviour
     public GameObject head;
     public Random_Controller ran;
     //float pi = 3.141592653589793f;
-    public int cameraspeed = 10;
+    public float cameraspeed = 3.3333333f;
 
     void Start()
     {

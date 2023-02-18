@@ -5,6 +5,7 @@ using UnityEngine;
 public class TerrainGenerator : MonoBehaviour
 {
     public GameObject player;
+    public ImageSynthesis img;
 
     int xPos
     {
@@ -92,7 +93,7 @@ public class TerrainGenerator : MonoBehaviour
     public bool grassEnabled = false;
     public void EnableGrass()
     {
-        Debug.Log("Enabled Grass");
+        //Debug.Log("Enabled Grass");
         grassEnabled = true;
         foreach (Vector2Int key in generatorList.Keys)
         
@@ -104,7 +105,7 @@ public class TerrainGenerator : MonoBehaviour
 
     public void DisableGrass()
     {
-        Debug.Log("Disabled Grass");
+        //Debug.Log("Disabled Grass");
         grassEnabled = false;
         foreach (Vector2Int key in generatorList.Keys)
 
@@ -120,6 +121,7 @@ public class TerrainGenerator : MonoBehaviour
         {
             ClearFromOutsideRadius(generateRadius);
             GenerateInRadius(generateRadius);
+            img.OnSceneChange();
 
             yield return new WaitForSeconds(2);
         }

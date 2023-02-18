@@ -22,10 +22,11 @@ public class ImageSynthesis : MonoBehaviour {
 	private CapturePass[] capturePasses = new CapturePass[] {
 		new CapturePass() { name = "_image" },
 		// new CapturePass() { name = "_id", supportsAntialiasing = false },
+		new CapturePass() { name = "_tag", supportsAntialiasing = false },
 		// new CapturePass() { name = "_layer", supportsAntialiasing = false },
 		new CapturePass() { name = "_depth" },
 		// new CapturePass() { name = "_normals" },
-		new CapturePass() { name = "_oflow", supportsAntialiasing = false, needsRescale = true } // (see issue with Motion Vectors in @KNOWN ISSUES)
+		//new CapturePass() { name = "_oflow", supportsAntialiasing = false, needsRescale = true } // (see issue with Motion Vectors in @KNOWN ISSUES)
 	};
 
 	struct CapturePass {
@@ -147,10 +148,10 @@ public class ImageSynthesis : MonoBehaviour {
 
 		// setup command buffers and replacement shaders
 		// SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.ObjectId);
-		// SetupCameraWithReplacementShader(capturePasses[2].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
-		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
+		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
+		SetupCameraWithReplacementShader(capturePasses[2].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
 		// SetupCameraWithReplacementShader(capturePasses[4].camera, uberReplacementShader, ReplacelementModes.Normals);
-		SetupCameraWithPostShader(capturePasses[2].camera, opticalFlowMaterial, DepthTextureMode.Depth | DepthTextureMode.MotionVectors);
+		//SetupCameraWithPostShader(capturePasses[2].camera, opticalFlowMaterial, DepthTextureMode.Depth | DepthTextureMode.MotionVectors);
 	}
 
 
@@ -160,12 +161,25 @@ public class ImageSynthesis : MonoBehaviour {
 		var mpb = new MaterialPropertyBlock();
 		foreach (var r in renderers)
 		{
-			var id = r.gameObject.GetInstanceID();
+			var id = r.gameObject.tag;
+			//Debug.Log(id);
 			var layer = r.gameObject.layer;
+			//Debug.Log(layer);
 			var tag = r.gameObject.tag;
 
-			mpb.SetColor("_ObjectColor", ColorEncoding.EncodeIDAsColor(id));
-			mpb.SetColor("_CategoryColor", ColorEncoding.EncodeLayerAsColor(layer));
+			//mpb.SetColor("_ObjectColor", ColorEncoding.EncodeIDAsColor(id));
+
+			if (layer == 8)
+			{
+				mpb.SetColor("_CategoryColor", Color.white);
+            }
+            else
+            {
+				mpb.SetColor("_CategoryColor", Color.black);
+			}
+			
+			//mpb.SetColor("_CategoryColor", ColorEncoding.EncodeLayerAsColor(layer));
+
 			r.SetPropertyBlock(mpb);
 		}
 	}
@@ -204,13 +218,14 @@ public class ImageSynthesis : MonoBehaviour {
 			filename = filenameWithoutExtension + pass.name;
 			// Code changed here
 			string newPath = "";
-			if (filename.Substring(filename.Length - 5) == "oflow"){
-				newPath = path + "OFlow/";
+			if (filename.Substring(filename.Length - 3) == "tag"){
+				newPath = path + "Tags/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}
-			else if (filename.Substring(filename.Length - 5) == "depth"){
-				newPath = path + "Depth/";
+			else
+			if (filename.Substring(filename.Length - 5) == "depth"){
+				newPath = path + "Depths/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}

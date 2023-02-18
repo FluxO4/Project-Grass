@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -273,7 +273,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2752462666377577657, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3295013302763240136, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -290,6 +290,10 @@ PrefabInstance:
     - target: {fileID: 4792905786351924843, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_Name
       value: PlayerCC
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792905786351924843, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4792905786351924843, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_TagString
@@ -343,6 +347,10 @@ PrefabInstance:
       propertyPath: ran
       value: 
       objectReference: {fileID: 1998838452}
+    - target: {fileID: 4792905786809787505, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
+      propertyPath: cameraspeed
+      value: 3.3333
+      objectReference: {fileID: 0}
     - target: {fileID: 4792905786809787519, guid: a8ab94e5d6394f743b2db6274b9c620c, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.5377358
@@ -812,7 +820,7 @@ GameObject:
   - component: {fileID: 2044046521}
   m_Layer: 0
   m_Name: TerrainGenerator
-  m_TagString: Untagged
+  m_TagString: grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -830,6 +838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1310451400}
+  img: {fileID: 1737928058}
   chunkPrefab: {fileID: 5079813895939485868, guid: 7151b193b1a1fc74a90152e19d2b41cb, type: 3}
   cSize: 20
   generateRadius: 4
@@ -882,9 +891,11 @@ MonoBehaviour:
   terrainGenerator: {fileID: 2044046521}
   mainCam: {fileID: 1737928056}
   saveHelper: {fileID: 8400000, guid: 2a8673df9c2bffd458525ac95973a294, type: 2}
-  dataSavePath: D:/TrainingData/
   saveTrainingdata: 0
   saveCounter: 0
+  header: Index,Input Image Paths,Depth Image Paths,Optical Flow Image Paths,Output
+    Image Paths,Px,Py,Pz,Vx,Vy,Vz,Rx,Ry,Rz,RVx,RVy,RVz,Lx,Ly,Lz
+  savePath: D:/TrainingData/
 --- !u!4 &2047255019
 Transform:
   m_ObjectHideFlags: 0

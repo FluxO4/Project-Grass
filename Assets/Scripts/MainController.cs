@@ -22,15 +22,18 @@ public class MainController : MonoBehaviour
 
     RenderTexture trainingDataRenderTexture;
 
+    public string savePath = "D:/TrainingData/";
+
     void Start()
     {
         mainCam = Camera.main;
-        File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", header+'\n');
-
+        File.AppendAllText(savePath + "train.csv", header+'\n');
+        Time.timeScale = 1.0f / 6.0f;
+        Application.targetFrameRate = 5;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         
         if (Input.GetKeyUp("g"))
@@ -54,31 +57,35 @@ public class MainController : MonoBehaviour
         if (Input.GetKeyUp("l") || saveTrainingdata)
         {
             InputVectors _inputVectors = playerController.getInputVectors();
-            print(_inputVectors.position[0]);
-            mainCam.Render();
+            //print(_inputVectors.position[0]);
+            //mainCam.Render();
 
             // Below comment saves as system date/time string format, to be checked if sequentially retrievable
             // SaveCurrentView(Application.dataPath + "/TrainingData/Inputs/"+ System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_input.jpg");
             
-            string synthPath = "./Assets/TrainingData/";
-            string pathOFlow = synthPath + "OFlow/" + saveCounter + "_synth_oflow.png";  
-            string pathDepth = synthPath + "Depth/" + saveCounter + "_synth_depth.png"; 
+            //string synthPath = "./Assets/TrainingData/";
+            
+            string pathTag =  "./Tags/" + saveCounter + "_synth_tag.png";  
+            string pathDepth =  "./Depths/" + saveCounter + "_synth_depth.png"; 
 
-            string inputImageWithPath = Application.dataPath + "/TrainingData/Inputs/" + saveCounter + "_input.jpg";
-            string outputImageWithPath = Application.dataPath + "/TrainingData/Outputs/" + saveCounter + "_output.jpg";
+            string inputImageWithPath = savePath + "Inputs/" + saveCounter + "_input.png";
+            string outputImageWithPath = savePath + "Outputs/" + saveCounter + "_output.png";
+
+            string inputImageRelativePath =  "./Inputs/" + saveCounter + "_input.png";
+            string outputImageRelativePath =  "./Outputs/" + saveCounter + "_output.png";
 
             // Save the current view, identified as 'input'
             SaveCurrentView(inputImageWithPath);
 
             // Save the depth map and optical flow map
-            mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, synthPath);
+            mainCam.GetComponent<ImageSynthesis>().Save(saveCounter+"_synth", -1, -1, savePath);
         
             // Append player input values to a csv file in the dataSavePath
-            string values = "" + saveCounter +"," + inputImageWithPath + "," + pathDepth + "," + pathOFlow + "," + outputImageWithPath + "," + _inputVectors.position[0] + "," + _inputVectors.position[1] + "," + _inputVectors.position[2] + "," + _inputVectors.velocity[0] + "," +_inputVectors.velocity[1]+ "," +_inputVectors.velocity[2]+ "," +_inputVectors.rotation[0]+ "," +_inputVectors.rotation[1]+ "," + _inputVectors.rotation[2] + "," + _inputVectors.rotationalVelocity[0]+ "," + _inputVectors.rotationalVelocity[1]+ "," + _inputVectors.rotationalVelocity[2]+"," + _inputVectors.lightingDifference[0]+ "," + _inputVectors.lightingDifference[1]+ "," + _inputVectors.lightingDifference[2]; 
-            File.AppendAllText(Application.dataPath + "/TrainingData/InputVectors.csv", values+'\n');
+            string values = "" + saveCounter + "," + inputImageRelativePath + "," + pathDepth + "," + pathTag + "," + outputImageRelativePath + "," + _inputVectors.position[0] + "," + _inputVectors.position[1] + "," + _inputVectors.position[2] + "," + _inputVectors.velocity[0] + "," +_inputVectors.velocity[1]+ "," +_inputVectors.velocity[2]+ "," +_inputVectors.rotation[0]+ "," +_inputVectors.rotation[1]+ "," + _inputVectors.rotation[2] + "," + _inputVectors.rotationalVelocity[0]+ "," + _inputVectors.rotationalVelocity[1]+ "," + _inputVectors.rotationalVelocity[2]+"," + _inputVectors.lightingDifference[0]+ "," + _inputVectors.lightingDifference[1]+ "," + _inputVectors.lightingDifference[2]; 
+            File.AppendAllText(savePath + "train.csv", values+'\n');
 
             terrainGenerator.EnableGrass();
-            mainCam.Render();
+            //mainCam.Render();
 
             // Save the current view again, identified as 'output'
             SaveCurrentView(outputImageWithPath);
@@ -105,7 +112,7 @@ public class MainController : MonoBehaviour
         tex.Apply();
         //RenderTexture.active = currentRT;
 
-        var Bytes = tex.EncodeToJPG();
+        var Bytes = tex.EncodeToPNG();
         Destroy(tex);
         mainCam.targetTexture = null;
 

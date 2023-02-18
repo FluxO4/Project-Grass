@@ -443,15 +443,17 @@ public class Player_ControllerCC : MonoBehaviour
         playerVelocity += Physics.gravity * Time.deltaTime;
 
 
-        lastPos = transform.position;
-        lastEulers = transform.eulerAngles;
+        
         playerCC.Move((playerVelocity+moveForce) * Time.deltaTime);
         //playerCC.Move(moveForce * Time.deltaTime);
 
     }
 
     public InputVectors getInputVectors() {
-        return new InputVectors(transform.position, transform.position - lastPos, transform.eulerAngles, transform.eulerAngles - lastEulers, head.transform.forward - WorldLight.transform.forward);
+        InputVectors t = new InputVectors(Maincam.transform.position, Maincam.transform.position - lastPos, Maincam.transform.eulerAngles, Maincam.transform.eulerAngles - lastEulers, Maincam.transform.forward - WorldLight.transform.forward);
+        lastPos = Maincam.transform.position;
+        lastEulers = Maincam.transform.eulerAngles;
+        return t;
     }
 
     private void Start()
