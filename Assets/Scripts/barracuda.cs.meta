@@ -3,7 +3,9 @@ guid: 89da21bb2e6944a4eb0a9991bc49bbdf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mainCam: {instanceID: 0}
+  - saveHelper: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
