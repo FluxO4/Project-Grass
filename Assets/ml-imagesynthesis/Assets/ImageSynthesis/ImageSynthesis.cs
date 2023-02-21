@@ -218,12 +218,12 @@ public class ImageSynthesis : MonoBehaviour {
 			filename = filenameWithoutExtension + pass.name;
 			// Code changed here
 			string newPath = "";
-			if (filename.Substring(filename.Length - 3) == "tag"){
+			/*if (filename.Substring(filename.Length - 3) == "tag"){
 				newPath = path + "Tags/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}
-			else
+			else*/
 			if (filename.Substring(filename.Length - 5) == "depth"){
 				newPath = path + "Depths/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
