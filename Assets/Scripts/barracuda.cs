@@ -19,7 +19,8 @@ public class barracuda : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        takeImage();
+        if (Input.GetKeyUp("p"))
+            takeImage();
     }
     public void takeImage()
     {
@@ -30,30 +31,21 @@ public class barracuda : MonoBehaviour
 
         int width = saveHelper.width;
         int height = saveHelper.height;
-        Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+        //Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
 
-        // Read the screen contents into the texture
-        tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-        tex.Apply();
+        //// Read the screen contents into the texture
+        //tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+        //tex.Apply();
 
-
-        var encoder = new TextureAsTensorData(tex);
-
-        // Convert the input texture to a TensorData object
-        //TensorData tensorData = TextureAsTensorData(tex);
-
-        // Define the shape of the tensor
-        int tens_height = tex.height;
-        int tens_width = tex.width;
-        int channels = 3; // RGBA
-        int[] shape = new int[] { 1, tens_height, tens_width, channels };
-
+        print(saveHelper.depth);
         // Create a Tensor object from the TensorData and metadata
-        Tensor inputTensor = new Tensor(shape, encoder, "input");
-
+        Tensor inputTensor = new Tensor(saveHelper);
+        TensorShape tens_shape = new TensorShape(1, width, height, 4);
         //Tensor inputTensor = new Tensor(TextureAsTensorData(tex));
-        print(inputTensor);
-        Destroy(tex);
+        foreach (float x in inputTensor.data.Download(tens_shape)){
+            print(x);
+        }
+        //Destroy(tex);
         mainCam.targetTexture = null;
 
         //File.WriteAllBytes(path, Bytes);
