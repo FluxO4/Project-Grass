@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.unity.barracuda": {
-      "version": "file:../Library/barracuda-release",
+      "version": "file:../barracuda-release",
       "depth": 0,
       "source": "local",
       "dependencies": {
