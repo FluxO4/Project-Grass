@@ -195,7 +195,7 @@ public class ImageSynthesis : MonoBehaviour {
 
 		var filenameExtension = System.IO.Path.GetExtension(filename);
 		if (filenameExtension == "")
-			filenameExtension = ".png"; 
+			filenameExtension = ".jpg"; 
 		var filenameWithoutExtension = Path.GetFileNameWithoutExtension(filename);
 
 		// var pathWithoutExtension = Path.Combine(path, filenameWithoutExtension);
@@ -269,7 +269,7 @@ public class ImageSynthesis : MonoBehaviour {
 		tex.Apply();
 
 		// encode texture into PNG
-		var bytes = tex.EncodeToPNG();
+		var bytes = tex.EncodeToJPG(80);
 		File.WriteAllBytes(filename, bytes);					
 
 		// restore state and cleanup
