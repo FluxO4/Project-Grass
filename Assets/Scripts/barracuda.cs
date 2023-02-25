@@ -40,12 +40,16 @@ public class barracuda : MonoBehaviour
     {
         if (Input.GetKeyUp("p"))
             takeDepth();
-        if (Input.GetKeyUp("o"))
+        if (Input.GetKeyUp("o")){
             takeView();
-        if (Input.GetKeyUp("i"))
+        }
+        if(Input.GetKeyUp("i"))
+            takeNormals();
+        if (Input.GetKeyUp("u"))
             concat_Tensor();
     }
 
+    
     public void takeView()
     {
         mainCam.targetTexture = saveHelper;
@@ -86,7 +90,35 @@ public class barracuda : MonoBehaviour
 
         //File.WriteAllBytes(path, Bytes);
     }
+    public void takeNormals(){
+        Tensor normalMapTensor = mainCam.GetComponent<normalmap_maker>().NormalMapSave();
+        print(normalMapTensor);
 
+        TensorShape tens_shape = new TensorShape(1, 100, 100, 4);
+
+        //Tensor inputTensor = new Tensor(TextureAsTensorData(tex));
+
+        //WARNING! DO NOT RUN THIS THING BELOW UNLESS YOU HAVE SET THE RENDER TEXTURE TO BE 10x10 size, or it will crash unity
+        var t = normalMapTensor.data.Download(tens_shape);
+        int ind = 0;
+
+
+        for (int r = 0; r < 100; r++)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                string currentline = "";
+                for (int ii = 0; ii < 4; ii++)
+                {
+                    currentline += "  " + ((int)(t[ind]*100)).ToString();
+
+                    ind++;
+                }
+                print(currentline);
+            }
+            print("");
+        }
+    }
     public void takeDepth()
     {
         inputTensorDepth = mainCam.GetComponent<depth_maker>().Save(width,height);
