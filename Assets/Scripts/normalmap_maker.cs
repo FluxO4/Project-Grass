@@ -238,11 +238,9 @@ public class normalmap_maker : MonoBehaviour {
 	// 	yield return new WaitForEndOfFrame();
 	// 	actualSaveAfterEOF();
 	// }
-	public Tensor NormalMapSave()
+	public Tensor NormalMapSave(int width = 800, int height = 480)
 	{
         Camera cam = capturePasses[1].camera;
-		int width = 100;
-		int height = 100;
 		bool supportsAntialiasing = false;
 		bool needsRescale = false ;
         var mainCamera = GetComponent<Camera>();
@@ -266,7 +264,7 @@ public class normalmap_maker : MonoBehaviour {
 
 		cam.Render();
 
-        Tensor temp = new Tensor(renderRT);
+        Tensor temp = new Tensor(renderRT,3);
 
         return temp;
 		// if (needsRescale)

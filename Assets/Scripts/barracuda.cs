@@ -13,6 +13,7 @@ public class barracuda : MonoBehaviour
     public RenderTexture saveHelper;
     public Tensor inputTensorView;
     public Tensor inputTensorDepth;
+    public Tensor inputTensorNormal;
     public Tensor inputTensor;
     private int width;
     private int height; 
@@ -91,33 +92,33 @@ public class barracuda : MonoBehaviour
         //File.WriteAllBytes(path, Bytes);
     }
     public void takeNormals(){
-        Tensor normalMapTensor = mainCam.GetComponent<normalmap_maker>().NormalMapSave();
-        print(normalMapTensor);
+        inputTensorNormal = mainCam.GetComponent<normalmap_maker>().NormalMapSave(width,height);
+        print(inputTensorNormal);
 
-        TensorShape tens_shape = new TensorShape(1, 100, 100, 4);
+        //TensorShape tens_shape = new TensorShape(1, 100, 100, 4);
 
         //Tensor inputTensor = new Tensor(TextureAsTensorData(tex));
 
         //WARNING! DO NOT RUN THIS THING BELOW UNLESS YOU HAVE SET THE RENDER TEXTURE TO BE 10x10 size, or it will crash unity
-        var t = normalMapTensor.data.Download(tens_shape);
-        int ind = 0;
+        // var t = normalMapTensor.data.Download(tens_shape);
+        // int ind = 0;
 
 
-        for (int r = 0; r < 100; r++)
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                string currentline = "";
-                for (int ii = 0; ii < 4; ii++)
-                {
-                    currentline += "  " + ((int)(t[ind]*100)).ToString();
+        // for (int r = 0; r < 100; r++)
+        // {
+        //     for (int i = 0; i < 100; i++)
+        //     {
+        //         string currentline = "";
+        //         for (int ii = 0; ii < 4; ii++)
+        //         {
+        //             currentline += "  " + ((int)(t[ind]*100)).ToString();
 
-                    ind++;
-                }
-                print(currentline);
-            }
-            print("");
-        }
+        //             ind++;
+        //         }
+        //         print(currentline);
+        //     }
+        //     print("");
+        // }
     }
     public void takeDepth()
     {
@@ -159,7 +160,8 @@ public class barracuda : MonoBehaviour
     {
         print("depth: "+ inputTensorDepth);
         print("view: "+ inputTensorView);
+        print("normal: "+ inputTensorNormal);
         //print("wtf"+TensorExtensions.Concat(new Tensor[] { inputTensorDepth, inputTensorView },2));
-        inputTensor = inputTensorView.Concat(inputTensorDepth, 2);
+        //inputTensor = inputTensorView.Concat(inputTensorDepth, 2);
     }
 }
