@@ -195,7 +195,7 @@ public class ImageSynthesis : MonoBehaviour {
 
 		var filenameExtension = System.IO.Path.GetExtension(filename);
 		if (filenameExtension == "")
-			filenameExtension = ".png"; 
+			filenameExtension = ".jpg"; 
 		var filenameWithoutExtension = Path.GetFileNameWithoutExtension(filename);
 
 		// var pathWithoutExtension = Path.Combine(path, filenameWithoutExtension);
@@ -218,12 +218,12 @@ public class ImageSynthesis : MonoBehaviour {
 			filename = filenameWithoutExtension + pass.name;
 			// Code changed here
 			string newPath = "";
-			if (filename.Substring(filename.Length - 3) == "tag"){
+			/*if (filename.Substring(filename.Length - 3) == "tag"){
 				newPath = path + "Tags/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}
-			else
+			else*/
 			if (filename.Substring(filename.Length - 5) == "depth"){
 				newPath = path + "Depths/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
@@ -269,7 +269,7 @@ public class ImageSynthesis : MonoBehaviour {
 		tex.Apply();
 
 		// encode texture into PNG
-		var bytes = tex.EncodeToPNG();
+		var bytes = tex.EncodeToJPG(80);
 		File.WriteAllBytes(filename, bytes);					
 
 		// restore state and cleanup

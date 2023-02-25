@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
-  saveHelper: {fileID: 0}
+  saveHelper: {fileID: 8400000, guid: 2a8673df9c2bffd458525ac95973a294, type: 2}
 --- !u!4 &140131402
 Transform:
   m_ObjectHideFlags: 0
@@ -800,6 +800,19 @@ MonoBehaviour:
   uberReplacementShader: {fileID: 4800000, guid: 171e6e515a12e4a298dce708924e98ba, type: 3}
   opticalFlowShader: {fileID: 4800000, guid: 2a970eca3c9e84f13b5b616e530a7919, type: 3}
   opticalFlowSensitivity: 1
+--- !u!114 &1737928062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502809781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67833c52cb172c24e8a23e3aa3a0cce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uberReplacementShader: {fileID: 0}
 --- !u!1 &1998838451
 GameObject:
   m_ObjectHideFlags: 0
