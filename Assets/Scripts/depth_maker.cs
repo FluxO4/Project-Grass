@@ -229,11 +229,9 @@ public class depth_maker : MonoBehaviour {
 	//	}
 	//}
 
-	public Tensor Save()
+	public Tensor Save(int width=800, int height=480)
 	{
         Camera cam = capturePasses[1].camera;
-		int width = 100;
-		int height = 100;
 		bool supportsAntialiasing = false;
 		bool needsRescale = false ;
         var mainCamera = GetComponent<Camera>();
@@ -256,7 +254,7 @@ public class depth_maker : MonoBehaviour {
 		cam.targetTexture = renderRT;
 
 		cam.Render();
-		Tensor temp = new Tensor(renderRT);
+		Tensor temp = new Tensor(renderRT,2);
 
         return temp;
         //if (needsRescale)
@@ -280,7 +278,7 @@ public class depth_maker : MonoBehaviour {
         //RenderTexture.active = prevActiveRT;
 
         //Object.Destroy(tex);
-        RenderTexture.ReleaseTemporary(finalRT);
+        //RenderTexture.ReleaseTemporary(finalRT);
 	}
 
 	#if UNITY_EDITOR
