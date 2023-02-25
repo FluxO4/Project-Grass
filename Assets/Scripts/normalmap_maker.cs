@@ -17,7 +17,7 @@ using Unity.Barracuda;
 //      2) rendering several cameras with different aspect ratios - vectors do stretch to the sides of the screen
 
 [RequireComponent (typeof(Camera))]
-public class depth_maker : MonoBehaviour {
+public class normalmap_maker : MonoBehaviour {
 
 	// pass configuration
 	private CapturePass[] capturePasses = new CapturePass[] {
@@ -25,8 +25,8 @@ public class depth_maker : MonoBehaviour {
 		// new CapturePass() { name = "_id", supportsAntialiasing = false },
 		//new CapturePass() { name = "_tag", supportsAntialiasing = false },
 		// new CapturePass() { name = "_layer", supportsAntialiasing = false },
-		new CapturePass() { name = "_depth" },
-		// new CapturePass() { name = "_normals" },
+		// new CapturePass() { name = "_depth" },
+		new CapturePass() { name = "_normals" },
 		//new CapturePass() { name = "_oflow", supportsAntialiasing = false, needsRescale = true } // (see issue with Motion Vectors in @KNOWN ISSUES)
 	};
 
@@ -122,7 +122,7 @@ public class depth_maker : MonoBehaviour {
 
 	public void OnCameraChange()
 	{
-		int targetDisplay = 2;
+		int targetDisplay = 3;
 		var mainCamera = GetComponent<Camera>();
 		foreach (var pass in capturePasses)
 		{
@@ -149,8 +149,8 @@ public class depth_maker : MonoBehaviour {
 		// setup command buffers and replacement shaders
 		//SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.ObjectId);
 		//SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
-		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
-		//SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.Normals);
+		// SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
+		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.Normals);
 		//SetupCameraWithPostShader(capturePasses[2].camera, opticalFlowMaterial, DepthTextureMode.Depth | DepthTextureMode.MotionVectors);
 	}
 
@@ -184,31 +184,31 @@ public class depth_maker : MonoBehaviour {
 		}
 	}
 
-	//public void Save(string filename, int width = -1, int height = -1, string path = "")
-	//{
-	//	if (width <= 0 || height <= 0)
-	//	{
-	//		width = Screen.width;
-	//		height = Screen.height;
-	//	}
+	// public void Save(string filename, int width = -1, int height = -1, string path = "")
+	// {
+	// 	if (width <= 0 || height <= 0)
+	// 	{
+	// 		width = Screen.width;
+	// 		height = Screen.height;
+	// 	}
 		
-	//	var filenameExtension = System.IO.Path.GetExtension(filename);
-	//	if (filenameExtension == "")
-	//		filenameExtension = ".jpg"; 
-	//	var filenameWithoutExtension = Path.GetFileNameWithoutExtension(filename);
+	// 	var filenameExtension = System.IO.Path.GetExtension(filename);
+	// 	if (filenameExtension == "")
+	// 		filenameExtension = ".jpg"; 
+	// 	var filenameWithoutExtension = Path.GetFileNameWithoutExtension(filename);
 
-	//	// var pathWithoutExtension = Path.Combine(path, filenameWithoutExtension);
+	// 	// var pathWithoutExtension = Path.Combine(path, filenameWithoutExtension);
 
-	//	// execute as coroutine to wait for the EndOfFrame before starting capture
-	//	StartCoroutine(
-	//		WaitForEndOfFrameAndSave(path, filenameWithoutExtension, filenameExtension, width, height));
-	//}
+	// 	// execute as coroutine to wait for the EndOfFrame before starting capture
+	// 	StartCoroutine(
+	// 		WaitForEndOfFrameAndSave(path, filenameWithoutExtension, filenameExtension, width, height));
+	// }
 
-	//private IEnumerator WaitForEndOfFrameAndSave(string path, string filenameWithoutExtension, string filenameExtension, int width, int height)
-	//{
-	//	yield return new WaitForEndOfFrame();
-	//	Save(path, filenameWithoutExtension, filenameExtension, width, height);
-	//}
+	// private IEnumerator WaitForEndOfFrameAndSave(string path, string filenameWithoutExtension, string filenameExtension, int width, int height)
+	// {
+	// 	yield return new WaitForEndOfFrame();
+	// 	Save(path, filenameWithoutExtension, filenameExtension, width, height);
+	// }
 
 	//private void Save(string path, string filenameWithoutExtension, string filenameExtension, int width, int height)
 	//{
@@ -228,8 +228,17 @@ public class depth_maker : MonoBehaviour {
 	//		}
 	//	}
 	//}
-
-	public Tensor Save()
+    // public void NormalMapSave(){
+    //     StartCoroutine(
+	// 		WaitForEndOfFrameAndSave());
+	
+    // }
+    // public IEnumerator WaitForEndOfFrameAndSave()
+	// {
+	// 	yield return new WaitForEndOfFrame();
+	// 	actualSaveAfterEOF();
+	// }
+	public Tensor NormalMapSave()
 	{
         Camera cam = capturePasses[1].camera;
 		int width = 100;
@@ -246,41 +255,45 @@ public class depth_maker : MonoBehaviour {
 			RenderTexture.GetTemporary(width, height, depth, format, readWrite, antiAliasing);
 		var renderRT = (!needsRescale) ? finalRT :
 			RenderTexture.GetTemporary(mainCamera.pixelWidth, mainCamera.pixelHeight, depth, format, readWrite, antiAliasing);
-		//var tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+		var tex = new Texture2D(width, height, TextureFormat.RGB24, false);
 
 		var prevActiveRT = RenderTexture.active;
 		var prevCameraRT = cam.targetTexture;
 
-		// render to offscreen texture (readonly from CPU side)
+        // render to offscreen texture (readonly from CPU side)
 		RenderTexture.active = renderRT;
 		cam.targetTexture = renderRT;
 
 		cam.Render();
-		Tensor temp = new Tensor(renderRT);
+
+        Tensor temp = new Tensor(renderRT);
 
         return temp;
-        //if (needsRescale)
-        //{
-        //	// blit to rescale (see issue with Motion Vectors in @KNOWN ISSUES)
-        //	RenderTexture.active = finalRT;
-        //	Graphics.Blit(renderRT, finalRT);
-        //	RenderTexture.ReleaseTemporary(renderRT);
-        //}
+		// if (needsRescale)
+		// {
+		// 	// blit to rescale (see issue with Motion Vectors in @KNOWN ISSUES)
+		// 	RenderTexture.active = finalRT;
+		// 	Graphics.Blit(renderRT, finalRT);
+		// 	RenderTexture.ReleaseTemporary(renderRT);
+		// }
 
-        // read offsreen texture contents into the CPU readable texture
-        //tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
-        //tex.Apply();
+		// // read offsreen texture contents into the CPU readable texture
+		// tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+		// tex.Apply();
 
-        //// encode texture into PNG
-        //var bytes = tex.EncodeToJPG(80);
-        //File.WriteAllBytes(Application.dataPath + "/../asd.jpg", bytes);					
+		// // encode texture into PNG
+		// var bytes = tex.EncodeToPNG();
+		// File.WriteAllBytes(Application.dataPath + "/../normal.jpg", bytes);					
 
-        //// restore state and cleanup
-        //cam.targetTexture = prevCameraRT;
-        //RenderTexture.active = prevActiveRT;
+		// // restore state and cleanup
+		// cam.targetTexture = prevCameraRT;
+		// RenderTexture.active = prevActiveRT;
 
-        //Object.Destroy(tex);
-        RenderTexture.ReleaseTemporary(finalRT);
+		// Object.Destroy(tex);
+		// RenderTexture.ReleaseTemporary(finalRT);		
+
+
+        // RenderTexture.ReleaseTemporary(finalRT);
 	}
 
 	#if UNITY_EDITOR
