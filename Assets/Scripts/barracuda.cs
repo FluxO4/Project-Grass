@@ -34,7 +34,14 @@ public class barracuda : MonoBehaviour
         inputTensor = new Tensor(1,height, width,5);
         mainCam = Camera.main;
         // m_RuntimeModel = ModelLoader.Load(modelAsset);
+
+        
+    
+        // var engine = WorkerFactory.CreateWorker( WorkerFactory.Device.GPU, model);
+        
+    
     }
+
 
     // Update is called once per frame
     void Update()
@@ -46,8 +53,28 @@ public class barracuda : MonoBehaviour
         }
         if(Input.GetKeyUp("i"))
             takeNormals();
-        if (Input.GetKeyUp("u"))
-            concat_Tensor();
+        if (Input.GetKeyUp("u")){
+
+            
+            // var inputs = new Dictionary<string, Tensor>();
+            // inputs[name1] = new Tensor(batch, height1, width1, channels1);
+            // inputs[name2] = new Tensor(batch, height2, width2, channels2);
+            // var modelPath = Application.dataPath + "/../Assets/models/epoch2-step1500_1.onnx";
+            var modelPath = "epoch2-step1500_1";
+            // Model model = ModelLoader.Load(modelPath);
+            var _model = ModelLoader.Load((NNModel)Resources.Load(modelPath));
+
+            var worker = WorkerFactory.CreateWorker(WorkerFactory.Type.CSharp, _model);
+            Dictionary<string, Tensor> temp = new Dictionary<string, Tensor>();
+            temp.Add("frame", inputTensorView);
+            worker.Execute(temp);
+
+            // Tensor output = worker.PeekOutput();
+            // print(output);
+            // var texture = BarracudaTextureUtils.TensorToRenderTexture(output);
+            // print(texture);
+        }
+            
     }
 
     
