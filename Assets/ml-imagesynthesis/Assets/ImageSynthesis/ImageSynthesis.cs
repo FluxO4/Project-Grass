@@ -22,10 +22,10 @@ public class ImageSynthesis : MonoBehaviour {
 	private CapturePass[] capturePasses = new CapturePass[] {
 		new CapturePass() { name = "_image" },
 		// new CapturePass() { name = "_id", supportsAntialiasing = false },
-		new CapturePass() { name = "_tag", supportsAntialiasing = false },
+		//new CapturePass() { name = "_tag", supportsAntialiasing = false },
 		// new CapturePass() { name = "_layer", supportsAntialiasing = false },
 		new CapturePass() { name = "_depth" },
-		// new CapturePass() { name = "_normals" },
+		new CapturePass() { name = "_normals" },
 		//new CapturePass() { name = "_oflow", supportsAntialiasing = false, needsRescale = true } // (see issue with Motion Vectors in @KNOWN ISSUES)
 	};
 
@@ -148,9 +148,9 @@ public class ImageSynthesis : MonoBehaviour {
 
 		// setup command buffers and replacement shaders
 		// SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.ObjectId);
-		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
-		SetupCameraWithReplacementShader(capturePasses[2].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
-		// SetupCameraWithReplacementShader(capturePasses[4].camera, uberReplacementShader, ReplacelementModes.Normals);
+		//SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
+		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.DepthCompressed, Color.white);
+		SetupCameraWithReplacementShader(capturePasses[2].camera, uberReplacementShader, ReplacelementModes.Normals);
 		//SetupCameraWithPostShader(capturePasses[2].camera, opticalFlowMaterial, DepthTextureMode.Depth | DepthTextureMode.MotionVectors);
 	}
 
@@ -218,14 +218,14 @@ public class ImageSynthesis : MonoBehaviour {
 			filename = filenameWithoutExtension + pass.name;
 			// Code changed here
 			string newPath = "";
-			/*if (filename.Substring(filename.Length - 3) == "tag"){
-				newPath = path + "Tags/";
+			if (filename.Substring(filename.Length - 7) == "normals"){
+				newPath = path + "Normal/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}
-			else*/
+			else
 			if (filename.Substring(filename.Length - 5) == "depth"){
-				newPath = path + "Depths/";
+				newPath = path + "Depth/";
 				Save(pass.camera, newPath + filename + filenameExtension, width, height, pass.supportsAntialiasing, pass.needsRescale);
 
 			}
