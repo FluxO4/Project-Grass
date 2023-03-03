@@ -47,8 +47,8 @@ public class Camera_Controller : MonoBehaviour
         if (ran) {
             if (ran.running)
             {
-                h = 5f * ran.CameraRight * cameraspeed * 0.005f;
-                v = -2.5f * ran.CameraUp * cameraspeed * 0.005f;
+                h = 5f * ran.CameraRight * cameraspeed * 0.002f;
+                v = -2.5f * ran.CameraUp * cameraspeed * 0.002f;
             }
         }
 

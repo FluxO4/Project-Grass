@@ -1,7 +1,7 @@
 // Based on builtin Internal-DepthNormalsTexture.shader
 // EncodeDepthNormal() is replaced with custom Output() function
 
-Shader "Hidden/UberReplacement" {
+Shader "Hidden/UberReplacement DEPTH" {
 Properties {
 	_MainTex ("", 2D) = "white" {}
 	_Cutoff ("", Float) = 0.5
@@ -9,6 +9,7 @@ Properties {
 
 	_ObjectColor ("Object Color", Color) = (1,1,1,1)
 	_CategoryColor ("Catergory Color", Color) = (0,1,0,1)
+
 }
 
 SubShader {
@@ -17,6 +18,7 @@ CGINCLUDE
 fixed4 _ObjectColor;
 fixed4 _CategoryColor;
 int _OutputMode;
+
 
 // remap depth: [0 @ eye .. 1 @ far] => [0 @ near .. 1 @ far]
 inline float Linear01FromEyeToLinear01FromNear(float depth01)
