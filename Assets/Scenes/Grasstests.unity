@@ -1157,7 +1157,7 @@ MonoBehaviour:
   depthTexture: {fileID: 8400000, guid: 7584d520a6d47d74195ec3787d8a6eee, type: 2}
   outputTexture: {fileID: 8400000, guid: 4b35bdf040c60294eb037d787dc7a108, type: 2}
   normalsTexture: {fileID: 8400000, guid: 24f82fa942557c740b0057aaa46b55ef, type: 2}
-  grassGenerator: {fileID: 5022602860645237092, guid: 362e01b7e1ea2404389bd4cff103d667, type: 3}
+  grassGenerator: {fileID: 5022602860645237092, guid: eeec4205fafa3764dbe48766c3c43728, type: 3}
 --- !u!1 &1236175617
 GameObject:
   m_ObjectHideFlags: 0
