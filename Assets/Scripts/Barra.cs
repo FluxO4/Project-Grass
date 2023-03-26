@@ -14,6 +14,8 @@ public class Barra : MonoBehaviour
     public Camera depthCam;
     public Camera normalscam;
 
+    public bool doNormals = true;
+
     //public Tensor[] inputs = new Tensor[2];
 
     public RenderTexture viewTexture;
@@ -34,8 +36,11 @@ public class Barra : MonoBehaviour
         /*cb.SetGlobalFloat("_OutputMode", 4);
         normalscam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, cb);
         normalscam.AddCommandBuffer(CameraEvent.BeforeFinalPass, cb);*/
-        normalscam.SetReplacementShader(normalsShader, "");
-        normalscam.backgroundColor = Color.black;
+        if (doNormals)
+        {
+            normalscam.SetReplacementShader(normalsShader, "");
+            normalscam.backgroundColor = Color.black;
+        }
 
 
         runtimeModel = ModelLoader.Load(grassGenerator);
@@ -48,30 +53,53 @@ public class Barra : MonoBehaviour
     {
         mainCam.Render();
         depthCam.Render();
-        normalscam.Render();
-        var inputs = new Dictionary<string, Tensor>();
+        if (doNormals)
+        {
+            normalscam.Render();
+            var inputs = new Dictionary<string, Tensor>();
 
-        inputs["onnx::Concat_0"] = new Tensor(viewTexture, 3);
-        //print(inputs["onnx::Concat_0"]);
+            inputs["onnx::Concat_0"] = new Tensor(viewTexture, 3);
+            //print(inputs["onnx::Concat_0"]);
 
-        inputs["onnx::Concat_1"] = new Tensor(depthTexture, 1);
-        inputs["onnx::Concat_2"] = new Tensor(normalsTexture, 3);
-        //print(inputs["onnx::Concat_1"]);
-        //print(inputs["onnx::Concat_2"]);
-        //Debug.Break();
+            inputs["onnx::Concat_1"] = new Tensor(depthTexture, 1);
+            inputs["onnx::Concat_2"] = new Tensor(normalsTexture, 3);
+            //print(inputs["onnx::Concat_1"]);
+            //print(inputs["onnx::Concat_2"]);
+            //Debug.Break();
 
-        //var inputs = new Tensor(viewTexture, 3);
+            //var inputs = new Tensor(viewTexture, 3);
 
-        worker.Execute(inputs);
+            worker.Execute(inputs);
 
-        Tensor output = worker.PeekOutput();
-        output.ToRenderTexture(outputTexture);
+            //Tensor output = worker.PeekOutput();
+            worker.PeekOutput().ToRenderTexture(outputTexture);
 
-        inputs["onnx::Concat_0"].Dispose();
-        inputs["onnx::Concat_1"].Dispose();
-        inputs["onnx::Concat_2"].Dispose();
+            inputs["onnx::Concat_0"].Dispose();
+            inputs["onnx::Concat_1"].Dispose();
+            inputs["onnx::Concat_2"].Dispose();
+        }
+        else
+        {
+            var inputs = new Dictionary<string, Tensor>();
 
-        output.Dispose();
+            inputs["onnx::Concat_0"] = new Tensor(viewTexture, 3);
+            //print(inputs["onnx::Concat_0"]);
+
+            inputs["onnx::Concat_1"] = new Tensor(depthTexture, 1);
+
+   
+
+            worker.Execute(inputs);
+
+            //Tensor output = worker.PeekOutput();
+            worker.PeekOutput().ToRenderTexture(outputTexture);
+
+            inputs["onnx::Concat_0"].Dispose();
+            inputs["onnx::Concat_1"].Dispose();
+
+        }
+
+        //output.Dispose();
 
     }
 

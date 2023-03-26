@@ -27,12 +27,12 @@ public class MainController : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        //File.AppendAllText(savePath + "train.csv", header+'\n');
-        //Time.timeScale = 1.0f / 6.0f;
-        //Application.targetFrameRate = 5;
+        File.AppendAllText(savePath + "train.csv", header+'\n');
+// Time.timeScale = 1.0f / 6.0f;
+        Application.targetFrameRate = 30;
 
         //Time.timeScale = 1.0f / 6.0f;
-        Application.targetFrameRate = 30;
+        //Application.targetFrameRate = 30;
     }
 
     // Update is called once per frame

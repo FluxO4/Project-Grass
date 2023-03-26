@@ -67,7 +67,6 @@ public class TerrainGenerator : MonoBehaviour
                 }
             }
         }
-
     }
 
     void ClearFromOutsideRadius(int radius)
@@ -78,7 +77,7 @@ public class TerrainGenerator : MonoBehaviour
                 GameObject t = generatorList[key].gameObject;
                 
                 removeKeys.Add(key);
-// generatorList.Remove(key);
+                //generatorList.Remove(key);
                 Destroy(t);
             }
         }
